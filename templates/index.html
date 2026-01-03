@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SmartRoute AI</title>
+</head>
+<body>
+    <h2>SmartRoute AI – Delivery Delay Prediction</h2>
+
+    <form action="/predict" method="post">
+        Distance (km): <input type="number" name="distance" required><br><br>
+        Delivery Time (hour): <input type="number" name="delivery_time" required><br><br>
+
+        Traffic Level:
+        <select name="traffic">
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+        </select><br><br>
+
+        Weather:
+        <select name="weather">
+            <option value="0">Clear</option>
+            <option value="1">Rainy</option>
+            <option value="2">Stormy</option>
+        </select><br><br>
+
+        Rider Workload:
+        <select name="workload">
+            <option value="0">Low</option>
+            <option value="1">Medium</option>
+            <option value="2">High</option>
+        </select><br><br>
+
+        <button type="submit">Predict</button>
+    </form>
+
+    {% if prediction %}
+        <h3>Prediction: {{ prediction }}</h3>
+    {% endif %}
+</body>
+</html>
