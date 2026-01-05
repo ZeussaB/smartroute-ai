@@ -2,40 +2,50 @@
 <html>
 <head>
     <title>SmartRoute AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
+
+<div class="container">
     <h2>SmartRoute AI – Delivery Delay Prediction</h2>
 
     <form action="/predict" method="post">
-        Distance (km): <input type="number" name="distance" required><br><br>
-        Delivery Time (hour): <input type="number" name="delivery_time" required><br><br>
+        <label>Distance (km)</label>
+        <input type="number" name="distance" required>
 
-        Traffic Level:
+        <label>Delivery Time (hour)</label>
+        <input type="number" name="delivery_time" required>
+
+        <label>Traffic Level</label>
         <select name="traffic">
             <option value="0">Low</option>
             <option value="1">Medium</option>
             <option value="2">High</option>
-        </select><br><br>
+        </select>
 
-        Weather:
+        <label>Weather</label>
         <select name="weather">
             <option value="0">Clear</option>
             <option value="1">Rainy</option>
             <option value="2">Stormy</option>
-        </select><br><br>
+        </select>
 
-        Rider Workload:
+        <label>Rider Workload</label>
         <select name="workload">
             <option value="0">Low</option>
             <option value="1">Medium</option>
             <option value="2">High</option>
-        </select><br><br>
+        </select>
 
-        <button type="submit">Predict</button>
+        <button type="submit">Predict Delivery Status</button>
     </form>
 
     {% if prediction %}
-        <h3>Prediction: {{ prediction }}</h3>
+        <div class="result {{ 'delayed' if prediction == 'Delayed' else 'on-time' }}">
+            Prediction: {{ prediction }}
+        </div>
     {% endif %}
+</div>
+
 </body>
 </html>
