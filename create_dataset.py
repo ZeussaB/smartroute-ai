@@ -4,23 +4,24 @@ import random
 rows = []
 
 for _ in range(500):
-    distance = random.randint(1, 20)
-    delivery_time = random.randint(1, 18)
-    traffic = random.randint(0, 2)      # 0=Low,1=Medium,2=High
-    weather = random.randint(0, 2)      # 0=Clear,1=Rainy,2=Stormy
-    workload = random.randint(0, 2)     # 0=Low,1=Medium,2=High
+    distance = random.randint(1, 20)            # km
+    delivery_time = random.randint(1, 18)       # hours
+    traffic = random.randint(0, 2)              # 0=Low,1=Medium,2=High
+    weather = random.randint(0, 2)              # 0=Clear,1=Rain,2=Storm
+    workload = random.randint(0, 2)             # 0=Low,1=Medium,2=High
 
+    # -----------------------------
     # IMPROVED DELAY LOGIC
+    # -----------------------------
 
     score = 0
 
     # Baseline expected delivery time (ideal conditions)
     expected_time = distance * 1  # 1 hour per km baseline
 
-    # Time efficiency
+    # Time efficiency scoring
     if delivery_time > expected_time * 3:
-        # Extremely inefficient (hard delay)
-        score += 4
+        score += 4     # extreme delay
     elif delivery_time > expected_time * 2:
         score += 2
     elif delivery_time > expected_time * 1.2:
@@ -32,9 +33,12 @@ for _ in range(500):
     elif traffic == 1:
         score += 1
 
-    # Weather impact
+    # Weather impact (short distance mitigates severity)
     if weather == 2:
-        score += 2
+        if distance >= 5:
+            score += 2
+        else:
+            score += 1
     elif weather == 1:
         score += 1
 
@@ -44,7 +48,7 @@ for _ in range(500):
     elif workload == 1:
         score += 1
 
-    # Final decision
+    # Final delay decision
     delay = 1 if score >= 4 else 0
 
     rows.append([
@@ -56,6 +60,7 @@ for _ in range(500):
         delay
     ])
 
+# Save to CSV
 df = pd.DataFrame(rows, columns=[
     "distance_km",
     "delivery_time",
@@ -67,6 +72,3 @@ df = pd.DataFrame(rows, columns=[
 
 df.to_csv("delivery_data.csv", index=False)
 print("Improved dataset created successfully")
-
-# The dataset 'delivery_data.csv' contains synthetic data
-# generated using a realistic scoring-based delay mechanism.
