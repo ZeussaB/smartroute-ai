@@ -10,9 +10,7 @@ for _ in range(500):
     weather = random.randint(0, 2)      # 0=Clear,1=Rainy,2=Stormy
     workload = random.randint(0, 2)     # 0=Low,1=Medium,2=High
 
-    # -----------------------------
     # IMPROVED DELAY LOGIC
-    # -----------------------------
 
     score = 0
 
