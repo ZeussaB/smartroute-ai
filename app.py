@@ -1,61 +1,34 @@
 from flask import Flask, render_template, request
+import joblib
 import pandas as pd
-from sklearn.tree import DecisionTreeClassifier
-import os
 
 app = Flask(__name__)
-
-# Load or Train Model
-
-DATA_FILE = "delivery_data.csv"
-
-# Check if dataset exists
-if not os.path.exists(DATA_FILE):
-    raise FileNotFoundError("Please generate 'delivery_data.csv' first using create_dataset.py")
-
-# Load dataset
-df = pd.read_csv(DATA_FILE)
-
-# Features and target
-X = df[["distance_km", "delivery_time", "traffic_level", "weather", "rider_workload"]]
-y = df["delay"]
-
-# Train Decision Tree
-model = DecisionTreeClassifier(random_state=42)
-model.fit(X, y)
-
-# Routes
+model = joblib.load("model/delay_model.pkl")
 
 @app.route("/")
-def index():
+def home():
     return render_template("index.html")
 
 @app.route("/predict", methods=["POST"])
 def predict():
-    try:
-        # Get form data
-        distance = float(request.form["distance"])
-        delivery_time = float(request.form["delivery_time"])
-        traffic = int(request.form["traffic"])
-        weather = int(request.form["weather"])
-        workload = int(request.form["workload"])
+    distance = float(request.form["distance"])
+    delivery_time = int(request.form["delivery_time"])
+    traffic = int(request.form["traffic"])
+    weather = int(request.form["weather"])
+    workload = int(request.form["workload"])
 
-        # Create DataFrame for prediction
-        input_df = pd.DataFrame([[
-            distance, delivery_time, traffic, weather, workload
-        ]], columns=X.columns)
+    input_data = pd.DataFrame([{
+    "distance_km": distance,
+    "delivery_time": delivery_time,
+    "traffic_level": traffic,
+    "weather": weather,
+    "rider_workload": workload
+    }])
 
-        # Make prediction
-        prediction = model.predict(input_df)[0]
+    prediction = model.predict(input_data)
 
-        # Convert to readable string
-        result = "Delayed" if prediction == 1 else "On Time"
-
-        return render_template("index.html", prediction_text=f"Prediction: {result}")
-
-    except Exception as e:
-        return render_template("index.html", prediction_text=f"Error: {str(e)}")
-
+    result = "Delayed" if prediction[0] == 1 else "On Time"
+    return render_template("index.html", prediction=result)
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5500)
+    app.run(host="127.0.0.1", port=5500, debug=True)

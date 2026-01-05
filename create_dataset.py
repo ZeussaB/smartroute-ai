@@ -10,18 +10,20 @@ for _ in range(500):
     weather = random.randint(0, 2)              # 0=Clear,1=Rain,2=Storm
     workload = random.randint(0, 2)             # 0=Low,1=Medium,2=High
 
-    # -----------------------------
+    # PERFECT CONDITION OVERRIDE
+    if traffic == 0 and weather == 0 and workload == 0:
+        # Delivery time should match distance realistically
+        # 15–30 minutes per km -> approx 0.25–0.5 hour
+        delivery_time = round(random.uniform(distance * 0.25, distance * 0.5), 2)
+
     # IMPROVED DELAY LOGIC
-    # -----------------------------
-
+    
     score = 0
-
-    # Baseline expected delivery time (ideal conditions)
     expected_time = distance * 1  # 1 hour per km baseline
 
     # Time efficiency scoring
     if delivery_time > expected_time * 3:
-        score += 4     # extreme delay
+        score += 4
     elif delivery_time > expected_time * 2:
         score += 2
     elif delivery_time > expected_time * 1.2:
@@ -71,4 +73,4 @@ df = pd.DataFrame(rows, columns=[
 ])
 
 df.to_csv("delivery_data.csv", index=False)
-print("Improved dataset created successfully")
+print("Dataset created successfully")
