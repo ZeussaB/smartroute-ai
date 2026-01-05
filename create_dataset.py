@@ -14,11 +14,16 @@ for _ in range(500):
 
     score = 0
 
-    # Time efficiency (key factor)
-    time_per_km = delivery_time / distance
-    if time_per_km > 2.5:
+    # Baseline expected delivery time (ideal conditions)
+    expected_time = distance * 1  # 1 hour per km baseline
+
+    # Time efficiency
+    if delivery_time > expected_time * 3:
+        # Extremely inefficient (hard delay)
+        score += 4
+    elif delivery_time > expected_time * 2:
         score += 2
-    elif time_per_km > 1.8:
+    elif delivery_time > expected_time * 1.2:
         score += 1
 
     # Traffic impact
@@ -39,7 +44,7 @@ for _ in range(500):
     elif workload == 1:
         score += 1
 
-    # Final delay decision
+    # Final decision
     delay = 1 if score >= 4 else 0
 
     rows.append([
