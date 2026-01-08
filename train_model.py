@@ -1,6 +1,7 @@
 import pandas as pd
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
+from sklearn.metrics import accuracy_score
 import joblib
 import os
 
@@ -25,3 +26,10 @@ os.makedirs("model", exist_ok=True)
 # Save model
 joblib.dump(model, "model/delay_model.pkl")
 print("Model trained and saved successfully")
+
+# Predict on test set
+y_pred = model.predict(X_test)
+
+# Calculate accuracy
+accuracy = accuracy_score(y_test, y_pred)
+print("Model Accuracy:", accuracy * 100, "%")
