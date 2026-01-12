@@ -91,26 +91,5 @@ def admin():
 
     return render_template("admin.html", metrics=metrics, importance=importance_data)
 
-# Scenario Testing
-@app.route("/scenario", methods=["POST"])
-def scenario():
-    base_distance = float(request.form["distance"])
-    base_time = float(request.form["time"])
-
-    scenarios = []
-    for traffic in [0, 1, 2]:
-        for weather in [0, 1, 2]:
-            for workload in [0, 1, 2]:
-                data = pd.DataFrame([[base_distance, base_time, traffic, weather, workload]], columns=FEATURES)
-                pred = model.predict(data)[0]
-                scenarios.append({
-                    "traffic": traffic,
-                    "weather": weather,
-                    "workload": workload,
-                    "result": "Delayed" if pred == 1 else "On Time"
-                })
-
-    return {"scenarios": scenarios}
-
 if __name__ == "__main__":
     app.run(host="127.0.0.1", port=5500, debug=True)
