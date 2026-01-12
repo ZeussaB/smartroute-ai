@@ -2,19 +2,19 @@
 <html>
 <head>
     <title>SmartRoute AI</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
-
 <div class="container">
-    <h2>SmartRoute AI – Delivery Delay Prediction</h2>
+    <h1>SmartRoute AI</h1>
+    <p class="subtitle">E-commerce Delivery Delay Prediction System</p>
 
-    <form action="/predict" method="post">
-        <label>Distance (km)</label>    
-        <input type="number" name="distance" required>
+    <form method="POST" action="/predict">
+        <label>Distance (km)</label>
+        <input type="number" step="0.1" name="distance" required>
 
-        <label>Delivery Time (hour)</label>        
-        <input type="number" name="delivery_time" required>
+        <label>Delivery Time (hours)</label>
+        <input type="number" step="0.1" name="time" required>
 
         <label>Traffic Level</label>
         <select name="traffic">
@@ -37,15 +37,33 @@
             <option value="2">High</option>
         </select>
 
-        <button type="submit">Predict Delivery Status</button>
+        <button type="submit">Predict</button>
     </form>
 
-    {% if prediction %}
-        <div class="result {{ 'delayed' if prediction == 'Delayed' else 'on-time' }}">
-            Prediction: {{ prediction }}
+    {% if warnings %}
+        <div class="warning-box">
+            <h3>Input Warnings</h3>
+            <ul>
+                {% for w in warnings %}
+                    <li>{{ w }}</li>
+                {% endfor %}
+            </ul>
         </div>
     {% endif %}
-</div>
 
+    {% if result %}
+        <div class="result-box">
+            <h2>Prediction Result</h2>
+            <p><strong>Status:</strong> {{ result }}</p>
+            <p><strong>Confidence:</strong> {{ confidence }}%</p>
+            <p><strong>Reason:</strong> {{ reason }}</p>
+        </div>
+    {% endif %}
+
+    <div class="links">
+        <a href="/admin">Admin Panel</a> |
+        <a href="/history">Prediction History</a>
+    </div>
+</div>
 </body>
 </html>

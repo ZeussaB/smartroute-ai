@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Panel - SmartRoute AI</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<div class="container">
+    <h1>Admin Panel</h1>
+
+    <div class="card">
+        <h2>Model Performance</h2>
+        <pre>{{ metrics }}</pre>
+    </div>
+
+    <div class="card">
+        <h2>Feature Importance</h2>
+        <ul>
+        {% for feature, value in importance %}
+            <li>{{ feature }}: {{ (value * 100) | round(2) }}%</li>
+        {% endfor %}
+        </ul>
+    </div>
+
+    <div class="links">
+        <a href="/">Back to Prediction</a> |
+        <a href="/history">View Prediction Logs</a>
+    </div>
+</div>
+</body>
+</html>

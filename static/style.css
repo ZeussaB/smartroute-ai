@@ -1,42 +1,49 @@
 body {
-    background-color: #f4f6f8;
-    font-family: Arial, Helvetica, sans-serif;
+    font-family: Arial, sans-serif;
+    background: #f2f4f8;
+    margin: 0;
+    padding: 0;
 }
 
 .container {
-    max-width: 500px;
-    margin: 60px auto;
+    width: 500px;
+    margin: 40px auto;
+    background: #ffffff;
     padding: 25px;
-    background-color: #ffffff;
     border-radius: 10px;
-    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 4px 10px rgba(0,0,0,0.1);
 }
 
-h2 {
+h1 {
     text-align: center;
-    margin-bottom: 20px;
     color: #2c3e50;
 }
 
+.subtitle {
+    text-align: center;
+    color: #7f8c8d;
+    margin-bottom: 20px;
+}
+
 label {
-    font-weight: bold;
     display: block;
-    margin-top: 12px;
+    margin-top: 10px;
+    font-weight: bold;
 }
 
 input, select {
     width: 100%;
     padding: 8px;
-    margin-top: 6px;
-    border-radius: 5px;
+    margin-top: 5px;
     border: 1px solid #ccc;
+    border-radius: 5px;
 }
 
 button {
     width: 100%;
-    margin-top: 20px;
     padding: 10px;
-    background-color: #1abc9c;
+    margin-top: 20px;
+    background: #3498db;
     border: none;
     color: white;
     font-size: 16px;
@@ -45,24 +52,59 @@ button {
 }
 
 button:hover {
-    background-color: #16a085;
+    background: #2980b9;
 }
 
-.result {
+.result-box {
     margin-top: 20px;
-    padding: 10px;
-    text-align: center;
-    font-size: 18px;
-    font-weight: bold;
+    padding: 15px;
+    background: #ecf9f1;
+    border-left: 5px solid #2ecc71;
+}
+
+.warning-box {
+    margin-top: 20px;
+    padding: 15px;
+    background: #fff4e5;
+    border-left: 5px solid #f39c12;
+}
+
+.card {
+    margin-top: 20px;
+    padding: 15px;
+    background: #f9f9f9;
     border-radius: 5px;
 }
 
-.on-time {
-    background-color: #d4edda;
-    color: #155724;
+.links {
+    margin-top: 20px;
+    text-align: center;
 }
 
-.delayed {
-    background-color: #f8d7da;
-    color: #721c24;
+.links a {
+    text-decoration: none;
+    color: #3498db;
+    font-weight: bold;
+    margin: 0 10px;
+}
+
+.links a:hover {
+    text-decoration: underline;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+table th, table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: center;
+}
+
+table th {
+    background-color: #3498db;
+    color: white;
 }
