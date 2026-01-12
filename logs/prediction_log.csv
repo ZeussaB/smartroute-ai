@@ -1,1 +1,2 @@
 distance_km,delivery_time,traffic_level,weather,rider_workload,prediction,confidence,timestamp
+1.0,1.0,0,0,0,On Time,100.0,2026-01-12 19:13:04.059759
