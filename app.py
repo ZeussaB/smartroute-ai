@@ -24,17 +24,20 @@ def validate_inputs(distance, time, traffic, weather, workload):
         warnings.append("Distance must be greater than 0.")
     if time <= 0:
         warnings.append("Delivery time must be greater than 0.")
-    if distance <= 5 and time > 5:
-        warnings.append("Delivery time seems too long for a short distance.")
-    return warnings
 
 # Explanation Logic
 def generate_reason(distance, time, traffic, weather, workload):
     reasons = []
+    if traffic == 1:
+        reasons.append("Medium traffic")
     if traffic == 2:
         reasons.append("High traffic")
+    if weather == 1:
+        reasons.append("Rainy weather")
     if weather == 2:
         reasons.append("Stormy weather")
+    if workload == 1:
+        reasons.append("Medium rider workload")
     if workload == 2:
         reasons.append("High rider workload")
     if distance > 10:
