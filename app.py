@@ -23,7 +23,15 @@ def validate_inputs(distance, time, traffic, weather, workload):
     if distance <= 0:
         warnings.append("Distance must be greater than 0.")
     if time <= 0:
-        warnings.append("Delivery time must be greater than 0.")
+        warnings.append("Delivery time must be greater than 0.") 
+    if traffic not in [0, 1, 2]:
+        warnings.append("Invalid traffic level selected.")
+    if weather not in [0, 1, 2]:
+        warnings.append("Invalid weather selection.")
+    if workload not in [0, 1, 2]:
+        warnings.append("Invalid rider workload selection.")
+
+    return warnings
 
 # Explanation Logic
 def generate_reason(distance, time, traffic, weather, workload):
@@ -58,6 +66,13 @@ def predict():
     workload = int(request.form["workload"])
 
     warnings = validate_inputs(distance, time, traffic, weather, workload)
+
+    # STOP if invalid inputs
+    if warnings:
+        return render_template(
+            "index.html",
+            warnings=warnings
+        )
 
     input_data = pd.DataFrame([[distance, time, traffic, weather, workload]], columns=FEATURES)
 
